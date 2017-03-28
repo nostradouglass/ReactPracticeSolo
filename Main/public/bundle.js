@@ -9461,8 +9461,23 @@ module.exports = __webpack_require__(19);
 var React = __webpack_require__(80);
 var ReactDOM = __webpack_require__(79);
 
+var Form = __webpack_require__(180);
+var DisplayName = __webpack_require__(179);
+var ClearName = __webpack_require__(181);
+
 var Container = React.createClass({
     displayName: 'Container',
+
+
+    getInitialState: function getInitialState() {
+        return { name: "guest" };
+    },
+
+    handleSearch: function handleSearch(name) {
+        this.setState({
+            name: name
+        });
+    },
 
     render: function render() {
         return React.createElement(
@@ -9471,8 +9486,11 @@ var Container = React.createClass({
             React.createElement(
                 'h3',
                 null,
-                'Testing'
-            )
+                'Simple First Kelly React App'
+            ),
+            React.createElement(Form, { onSearch: this.handleSearch }),
+            React.createElement(ClearName, { onSearch: this.handleSearch }),
+            React.createElement(DisplayName, { name: this.state.name })
         );
     }
 });
@@ -21737,6 +21755,102 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 179 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var React = __webpack_require__(80);
+
+var DisplayName = function DisplayName(props) {
+    return React.createElement(
+        'h3',
+        null,
+        'Welcome ',
+        props.name
+    );
+};
+
+module.exports = DisplayName;
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var React = __webpack_require__(80);
+
+var Form = React.createClass({
+    displayName: 'Form',
+
+    submitName: function submitName(e) {
+        e.preventDefault();
+
+        if (this.refs.name.value) {
+
+            this.props.onSearch(this.refs.name.value);
+            this.refs.name.value = '';
+        }
+    },
+    render: function render() {
+        return React.createElement(
+            'div',
+            null,
+            React.createElement(
+                'form',
+                { onSubmit: this.submitName },
+                React.createElement('input', { type: 'text', ref: 'name', placeholder: 'Enter your Name.' }),
+                React.createElement('br', null),
+                React.createElement('br', null),
+                React.createElement(
+                    'button',
+                    { type: 'submit' },
+                    'Submit'
+                )
+            )
+        );
+    }
+});
+
+module.exports = Form;
+
+/***/ }),
+/* 181 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var React = __webpack_require__(80);
+
+var ClearName = React.createClass({
+    displayName: 'ClearName',
+
+
+    clearDisplay: function clearDisplay(e) {
+        e.preventDefault();
+        this.props.onSearch('guest');
+    },
+
+    render: function render() {
+        return React.createElement(
+            'div',
+            null,
+            React.createElement(
+                'button',
+                { onClick: this.clearDisplay },
+                'Clear Name'
+            )
+        );
+    }
+});
+
+module.exports = ClearName;
 
 /***/ })
 /******/ ]);
